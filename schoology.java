@@ -1,15 +1,14 @@
 package readingQuizes;
 
-
-
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class schoology {
 
@@ -21,18 +20,41 @@ public class schoology {
 		  ChromeOptions options = new ChromeOptions();
 		  options.addArguments("--start-maximized");
 		  WebDriver driver = new ChromeDriver(options);
+		  driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 			  driver.get("https://school.district196.org/login/ldap?destination=home%2Frecent-activity&school=967827650");
-			  WebElement mail = driver.findElement(By.id("edit-mail"));
-			  mail.sendKeys("787115");
+			  driver.findElement(By.id("edit-mail")).sendKeys("787115");
 			  WebElement pass = driver.findElement(By.id("edit-pass"));
 			  pass.sendKeys("w3irDpa$$w0rD");
 			  pass.submit();
-			  WebDriverWait wait = new WebDriverWait(driver, 5);
-			  //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\\\"header\\\"]/header/nav/ul[1]/li[2]/div/button")));
+			  
+			  String className="AP AMER GOV & POL A";
+			  String assignName="14.3 Reading Quiz Due P. 388 - 396";
+			  
+			 
 			  driver.findElement(By.xpath("//*[@id=\"header\"]/header/nav/ul[2]/li[1]/button")).click();
-			  driver.findElement(By.xpath("//*[@id=\"header\"]/header/nav/ul[2]/li[1]/ul/li/label/input")).sendKeys("AP AMER GOV & POL A");
+			  driver.findElement(By.xpath("//*[@id=\"header\"]/header/nav/ul[2]/li[1]/ul/li/label/input")).sendKeys(className);
+			  
+			  
 			  driver.findElement(By.xpath("//*[@id=\"header\"]/header/nav/ul[2]/li[1]/ul/li[2]/a")).click();
-			  driver.findElement(By.xpath("//*[@id=\"course-events\"]/div[2]/div/div[4]/h4/a")).click();
+			  driver.findElement(By.xpath("//*[@id=\"course-profile-materials\"]/div[1]/div[2]/div/div/span")).click();
+			  
+			  driver.findElement(By.xpath("//*[@id=\"course-profile-materials\"]/div[1]/div[2]/div/ul/li[3]/a")).click();
+			  														
+			
+			
+			  boolean searching=true;
+			  for(int i=1;searching;i++) {
+				  try {
+					  WebElement quiz = driver.findElement(By.xpath("//*[@id=\"course-profile-materials\"]/div[2]/div/div["+i+"]/div/div[3]/div[1]/a"));
+					  if(quiz.getText().equals(assignName)) {
+						  searching=false;
+						  driver.findElement(By.xpath("//*[@id=\"course-profile-materials\"]/div[2]/div/div["+i+"]/div/div[3]/div[1]/a")).click();
+					  }
+				  } catch(NoSuchElementException e) {
+					  searching=false;
+					  System.out.println("quiz ("+assignName+") not found");
+				  }
+			  }
 			  driver.findElement(By.xpath("//*[@id=\"tabs-wrapper\"]/ul/li[3]/div/a")).click();
 			  //driver.findElement(By.xpath("//*[@id=\"begin-test-quiz\"]")).click();
 			  driver.findElement(By.xpath("//*[@id=\"edit-resume-1\"]")).click();
@@ -58,6 +80,7 @@ public class schoology {
 			  }
 			  
 			  for(String s:qs)System.out.println(s);
+			  driver.quit();
 		  }
 	
 		  
