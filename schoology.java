@@ -56,7 +56,6 @@ public class schoology {
 				  }
 			  }
 			  driver.findElement(By.xpath("//*[@id=\"tabs-wrapper\"]/ul/li[3]/div/a")).click();
-			  //driver.findElement(By.xpath("//*[@id=\"begin-test-quiz\"]")).click();
 			  driver.findElement(By.xpath("//*[@id=\"edit-resume-1\"]")).click();
 		  
 			  
