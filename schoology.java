@@ -22,9 +22,9 @@ public class schoology {
 		  WebDriver driver = new ChromeDriver(options);
 		  driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 			  driver.get("https://school.district196.org/login/ldap?destination=home%2Frecent-activity&school=967827650");
-			  driver.findElement(By.id("edit-mail")).sendKeys("787115");
+			  driver.findElement(By.id("edit-mail")).sendKeys("studentID");
 			  WebElement pass = driver.findElement(By.id("edit-pass"));
-			  pass.sendKeys("w3irDpa$$w0rD");
+			  pass.sendKeys("password");
 			  pass.submit();
 			  
 			  String className="AP AMER GOV & POL A";
